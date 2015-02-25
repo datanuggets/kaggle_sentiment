@@ -182,3 +182,14 @@ if __name__ == '__main__':
     output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
     output.to_csv( "Word2Vec_AverageVectors.csv", index=False, quoting=3 )
     print "Wrote Word2Vec_AverageVectors.csv"
+
+    # Fit a SVM to the training data
+    from sklearn.svm import SVC
+    svc = SVC().fit( trainDataVecs, train["sentiment"] )
+
+    # Test & extract results
+    result = svc.predict( testDataVecs )
+
+    # Write the test results
+    output = pd.DataFrame( data={"id":test["id"], "sentiment":result} )
+    output.to_csv( "Word2Vec_AverageVectors_SVC.csv", index=False, quoting=3 )
