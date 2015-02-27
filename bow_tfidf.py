@@ -37,10 +37,10 @@ if __name__ == '__main__':
     test_set_features = vectorizer.transform(test_set['review']).toarray()
 
     print "Get predictions..."
-    predictions = forest.predict(test_set_features)
+    predictions = forest.predict_proba(test_set_features)
 
     print "Wrting predictions to disk..."
-    output = pandas.DataFrame(data={'id': test_set['id'], 'sentiment': predictions})
+    output = pandas.DataFrame(data={'id': test_set['id'], 'sentiment': predictions[:,0]})
     output.to_csv('data/bag_of_words_2gram_tfidf.csv', index=False, quoting=3)
 
     print "Done"
