@@ -1,0 +1,7 @@
+To train, execute:
+
+    $ python vw_parse.py data/train.tsv.gz | vw -c -k -b 28 --passes 300 --loss_function logistic -f data/model_logistic.vw
+
+To validate, execute:
+
+    $ python vw_parse.py data/train.tsv.gz | vw -t --link logistic -i data/model_logistic.vw -p data/predictions_logistic.txt
