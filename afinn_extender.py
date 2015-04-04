@@ -45,7 +45,13 @@ if __name__ == '__main__':
         action='store_true',
         help='Remove stopwords from training corpus'
     )
-
+    parser.add_argument(
+        '--threads',
+        type=int,
+        action='store',
+        default=4,
+        help='Number of threads to use'
+    )
     parser.add_argument(
         '--save_word2vec',
         action='store',
@@ -63,16 +69,16 @@ if __name__ == '__main__':
         sentences = []
         corpus = pandas.read_csv(args.corpus_file, header=0,  delimiter="\t", quoting=3)
         for review in corpus['review']:
-          review = BeautifulSoup(review).get_text()
-          for line in sentence_tokenizer.tokenize(review):
-              line = line.lower()
-              line = [w for w in words_regex.findall(line) if w not in stopwords]
-              sentences.append(line)
+            review = BeautifulSoup(review).get_text()
+            for line in sentence_tokenizer.tokenize(review):
+                line = line.lower()
+                line = [w for w in words_regex.findall(line) if w not in stopwords]
+                sentences.append(line)
 
         print "Training Word2Vec model..."
         w2v = Word2Vec(
-          sentences,
-          workers=4,  # Number of threads to run in parallel
+            sentences,
+            workers=args.threads,  # Number of threads to run in parallel
             size=300,  # Word vector dimensionality
             min_count=40,  # Minimum word count
             window=10,  # Context window size
