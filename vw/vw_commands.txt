@@ -4,4 +4,4 @@ To train, execute:
 
 To validate, execute:
 
-    $ python vw_parse.py data/train.tsv.gz | vw -t --link logistic -i data/model_logistic.vw -p data/predictions_logistic.txt
+    $ python vw_parse.py data/validation.tsv.gz | vw -t --link logistic -i data/model_logistic.vw -p data/predictions_logistic.txt
