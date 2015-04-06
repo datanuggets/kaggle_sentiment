@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if args.corpus_file:
         words_regex = re.compile('\w+', re.UNICODE)
         sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-        stopwords = set(nltk.corpus.stopwords.words('english')) if args.strip_stopwords else {}
+        stopwords = set(nltk.corpus.stopwords.words('english')) if args.strip_stopwords else set()
 
         print "Pre-processing unlabled data..."
         sentences = []
@@ -100,8 +100,8 @@ if __name__ == '__main__':
     print "Getting extra AFINN words..."
 
     afinn = load_afinn_file(args.afinn_input)
-    positive_afinn_words = [w for w, s in afinn.iteritems() if w in w2v and w >= 2]
-    negative_afinn_words = [w for w, s in afinn.iteritems() if w in w2v and w <= -2]
+    positive_afinn_words = [w for w, s in afinn.iteritems() if w in w2v and s >= 2]
+    negative_afinn_words = [w for w, s in afinn.iteritems() if w in w2v and s <= -2]
 
     with open(args.afinn_output, 'wb') as f:
         # Write original words
