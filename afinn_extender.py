@@ -61,6 +61,13 @@ if __name__ == '__main__':
         help='Save the created Word2Vec model'
     )
     parser.add_argument(
+        '--w2v_topn',
+        type=int,
+        action='store',
+        default=300,
+        help='Number of results to obtain from w2v.most_similar()'
+    )
+    parser.add_argument(
         '--compression',
         action='store',
         default=None,
@@ -121,10 +128,10 @@ if __name__ == '__main__':
         for word, sentiment in afinn.iteritems():
             f.write("%s\t%d\n" % (word, sentiment))
         # Write newly found positive words
-        for word, similarity in w2v.most_similar(positive_afinn_words, negative_afinn_words, topn=75):
+        for word, similarity in w2v.most_similar(positive_afinn_words, negative_afinn_words, topn=args.w2v_topn):
             f.write("%s\t%d\n" % (word, 2))
         # Write newly found negative words
-        for word, similarity in w2v.most_similar(negative_afinn_words, positive_afinn_words, topn=75):
+        for word, similarity in w2v.most_similar(negative_afinn_words, positive_afinn_words, topn=args.w2v_topn):
             f.write("%s\t%d\n" % (word, -2))
 
     print "Done"
