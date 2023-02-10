@@ -9,4 +9,4 @@ scipy==0.15.1
 
 # Misc. tools
 flake8==2.3.0
-ipython==7.16.3
+ipython==8.10.0
